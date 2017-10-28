@@ -26,8 +26,6 @@ cp module.xml $JBOSS_HOME/modules/system/layers/base/com/oracle/ojdbc6/main/
 
 $JBOSS_HOME/bin/jboss-cli.sh --file=standalone-configuration.cli
 
-# export ORACLE_TCP_ADDR=oracle
-# export ORACLE_DATABASE=xe
 
 
 
