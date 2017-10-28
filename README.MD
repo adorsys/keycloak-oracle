@@ -104,6 +104,32 @@ DEV/keycloak-oracle> docker run --name oracle --shm-size=1g -p 1521:1521 -p 8080
 
 ```
 
+# Install Keycloak
+
+before you install keycloak, make sure you can reach the oracle docker host under the dns oracle.
+
+```
+DEV/keycloak-oracle> sudp vi /etc/hosts
+#
+# localhost is used to configure the loopback interface
+# when the system is booting.  Do not change this entry.
+##
+127.0.0.1       localhost
+255.255.255.255 broadcasthost
+::1             localhost
+~                    
+# Add this line                         
+192.168.99.100  oracle
+
+# save
+
+```
+DEV/keycloak-oracle> ./install-keycloak-with-oracle.sh
+
+```
+
+# Start keycloak
+
 
 Docker container address: oracle
 
