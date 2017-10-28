@@ -92,11 +92,13 @@ DEV/oracle-docker-images/OracleDatabase/dockerfiles> ./buildDockerImage.sh -v 11
 # Then run oracle xe
 Beware that we use "adorsys" as system password. This shall not be done on a productive server. 
 ```
+cd $DEV
 DEV> docker-machine ls
 NAME      ACTIVE   DRIVER       STATE     URL                         SWARM   DOCKER        ERRORS
 oracle    *        virtualbox   Running   tcp://192.168.99.100:2376           v17.10.0-ce
 
-DEV/keycloak-oracle> docker run --name oracle --shm-size=1g -p 1521:1521 -p 8080:8080 -e ORACLE_PWD=adorsys -v /u01/app/oracle/oradata -v PWD/setup:/u01/app/oracle/scripts/setup oracle/database:11.2.0.2-xe
+DEV> cd keycloak-oracle
+DEV/keycloak-oracle> docker run --name oracle --shm-size=1g -p 1521:1521 -p 8080:8080 -e ORACLE_PWD=adorsys -v /u01/app/oracle/oradata -v $PWD/setup:/u01/app/oracle/scripts/setup oracle/database:11.2.0.2-xe
 
 # Beware our scrpit DEV/keycloak-oracle/setup/init-oracle-xe.sql creates the user keyclaok with a password.
 
