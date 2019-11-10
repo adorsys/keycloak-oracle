@@ -56,7 +56,10 @@ Beware that we use "adorsys" as system password. This shall not be done on a pro
 ```
 
 DEV> cd keycloak-oracle
-DEV/keycloak-oracle> docker run --rm --name oracle --shm-size=1g -p 1521:1521 -p 8080:8080 -e ORACLE_PWD=adorsys -v /u01/app/oracle/oradata -v $PWD/setup:/u01/app/oracle/scripts/setup oracle/database:18.4.0-xe
+
+DEV> docker network create keycloak-network
+
+DEV/keycloak-oracle> docker run --rm --name oracle --net keycloak-network --shm-size=1g -p 1521:1521 -p 8081:8080 -e ORACLE_PWD=adorsys -v /u01/app/oracle/oradata -v $PWD/setup:/u01/app/oracle/scripts/setup oracle/database:18.4.0-xe
 
 # Beware our scrpit $DEV/keycloak-oracle/setup/init-oracle-xe.sql creates the user keyclaok with a password.
 
@@ -66,48 +69,8 @@ DEV/keycloak-oracle> docker run --rm --name oracle --shm-size=1g -p 1521:1521 -p
 
 before you install keycloak, make sure you can reach the oracle docker under the dns oracle.
 
-```
-DEV/keycloak-oracle> sudo vi /etc/hosts
-#
-# localhost is used to configure the loopback interface
-# when the system is booting.  Do not change this entry.
-##
-127.0.0.1       localhost
-255.255.255.255 broadcasthost
-::1             localhost
-~                    
-# Add this line                         
-127.0.0.1  oracle
-
-# Save. And ping oracle to test.
-DEV/keycloak-oracle> ping oracle
-PING oracle (127.0.0.1): 56 data bytes
-64 bytes from 127.0.0.1: icmp_seq=0 ttl=64 time=0.031 ms
-64 bytes from 127.0.0.1: icmp_seq=1 ttl=64 time=0.085 ms
-^X64 bytes from 127.0.0.1: icmp_seq=2 ttl=64 time=0.089 ms
-64 bytes from 127.0.0.1: icmp_seq=3 ttl=64 time=0.070 ms
-
-```
-
 # Install Keycloak
-
-```
-DEV/keycloak-oracle> ./install-keycloak-with-oracle.sh
-
-```
-
-# Start keycloak
-
-```
-DEV/keycloak-oracle> cd keycloak-3.3.0.Final/bin
-DEV/keycloak-oracle/keycloak-3.3.0.Final/bin> ./standalone.sh
-
-# This line shows that the keycloak server issuccessfully started.
-TS INFO  [org.jboss.as] (Controller Boot Thread) WFLYSRV0025: Keycloak 3.3.0.Final (WildFly Core 3.0.8.Final) started in 65275ms - Started 535 of 857 services (570 services are lazy, passive or on-demand)
-
-```
-# Setup keycloak admin password
-Access keycloak for the first time and setup admin password using localhost:8080
+DEV/keycloak-oracle> docker run --rm --name keycloak --net keycloak-network -e DB_VENDOR=oracle -p 8080:8080 -v $PWD/ojdbc8-full:/opt/jboss/keycloak/modules/system/layers/base/com/oracle/jdbc/main/driver jboss/keycloak:7.0.1
 
 
 

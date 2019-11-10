@@ -1,4 +1,4 @@
-export KEYCLOAK_VERSION=3.3.0.Final
+export KEYCLOAK_VERSION=7.0.1
 
 export JBOSS_HOME=keycloak-$KEYCLOAK_VERSION
 
@@ -21,7 +21,8 @@ tar xzf $KEYCLOAK_DIST
 
 # Install oracle jdbc driver
 mkdir -p $JBOSS_HOME/modules/system/layers/base/com/oracle/ojdbc6/main
-cp ojdbc6-11.2.0.3.jar $JBOSS_HOME/modules/system/layers/base/com/oracle/ojdbc6/main/
+cp OJDBC-Full/ojdbc6.jar $JBOSS_HOME/modules/system/layers/base/com/oracle/ojdbc6/main/
+cp OJDBC-Full/ojdbc.policy $JBOSS_HOME/modules/system/layers/base/com/oracle/ojdbc6/main/
 cp module.xml $JBOSS_HOME/modules/system/layers/base/com/oracle/ojdbc6/main/
 
 $JBOSS_HOME/bin/jboss-cli.sh --file=standalone-configuration.cli

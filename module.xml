@@ -22,7 +22,8 @@
   -->
 <module xmlns="urn:jboss:module:1.0" name="com.oracle.ojdbc6">
    <resources>
-      <resource-root path="ojdbc6-11.2.0.3.jar"/>
+      <resource-root path="ojdbc6.jar"/>
+      <resource-root path="ojdbc6.policy"/>
    </resources>
    <dependencies>
       <module name="javax.api"/>
